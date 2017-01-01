@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: user
 #
 #  id         :integer         not null, primary key
 #  user_name  :string(255)
@@ -9,7 +9,7 @@
 #  updated_at :datetime        not null
 #
 
-class Users < ActiveRecord::Base
+class User < ActiveRecord::Base
   attr_accessible :email_id, :user_name, :password, :password_confirmation 
   has_secure_password
   before_save { |user| user.email_id = email_id.downcase }

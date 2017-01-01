@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: user
 #
 #  id         :integer         not null, primary key
 #  user_name  :string(255)
@@ -11,9 +11,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Users, :type => :model do
+RSpec.describe User, :type => :model do
 	before do
-	 @user = Users.new( user_name: "Sample User", email_id: "user@sample.com")
+	 @user = User.new( user_name: "Sample User", email_id: "user@sample.com")
 	end 
 
 	subject{ @user }
@@ -69,7 +69,7 @@ RSpec.describe Users, :type => :model do
 
 	describe "return value of authenticate method" do 
 		before { @user.save }
-		let(:found_user) { Users.find_by_email(@user.email) }
+		let(:found_user) { User.find_by_email(@user.email) }
 		describe "with valid password" do
 			it { should == found_user.authenticate(@user.password) }
 		end
@@ -84,7 +84,7 @@ RSpec.describe Users, :type => :model do
 			end
 			describe "return value of authenticate method" do 
 				before { @user.save }
-				let(:found_user) { Users.find_by_email(@user.email) }
+				let(:found_user) { User.find_by_email(@user.email) }
 				describe "with valid password" do
 					it { should == found_user.authenticate(@user.password) }
 				end
@@ -96,9 +96,11 @@ RSpec.describe Users, :type => :model do
 			end
 		end
 	end
-
-	before do
-		@user = Users.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
- 	end
-
+	describe "profile page" do
+		let(:user) { FactoryGirl.create(:user)}
+		before { visit user_path(user) }
+		it { should have_selector('h1', text: user.name) }
+		it { should have_selector('title', text: user.name) } 
+	end
+	
 end
