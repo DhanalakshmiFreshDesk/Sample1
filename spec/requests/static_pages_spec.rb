@@ -17,7 +17,7 @@ RSpec.describe "StaticPages", :type => :request do
         page.should has_selector?('title', :text => full_title(''))
       }
       it "should not have a custom page title" do
-        page.should_not have_selector('title', :text => full_title('Home'))
+        page.should_not has_selector?('title', :text => full_title('Home'))
       end
     end
     describe "Help Page" do

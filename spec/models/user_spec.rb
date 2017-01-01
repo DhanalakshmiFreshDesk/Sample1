@@ -13,7 +13,7 @@ require 'rails_helper'
 
 RSpec.describe User, :type => :model do
 	before do
-	 @user = User.new( user_name: "Sample User", email_id: "user@sample.com")
+	 @user = User.new( user_name: "Sample User", email_id: "user@sample.com", password: "foobar", :password_confirmation: "foobar")
 	end 
 
 	subject{ @user }
@@ -101,6 +101,10 @@ RSpec.describe User, :type => :model do
 		before { visit user_path(user) }
 		it { should have_selector('h1', text: user.name) }
 		it { should have_selector('title', text: user.name) } 
+	end
+	describe "remember token" do
+		before{ @user.save }
+		its(:remember_token) { should_not be_blank}
 	end
 	
 end
